@@ -1,0 +1,20 @@
+mysql -u root -p	# Logs into my MySQL system.
+SHOW databases;		# Makes sure everything is working as it should be.
+CREATE DATABASE cameras;	# Creates a new database called 'cameras'.
+USE cameras;		# Makes sure the 'cameras' database is in use.
+CREATE USER 'rohan'@'localhost' IDENTIFIED BY '27North';	# Creates a user who can access just the new 'cameras' database and all of its objects.
+GRANT ALL ON cameras.* TO 'rohan'@'localhost';		# Allows the user 'rohan@localhost' full access to the 'cameras' database using the password '27North'.
+USE cameras;	# Makes sure the 'cameras' database is in use.
+CREATE TABLE video_output_1 (		# Creates a table called 'video_output_1' with the following 5 columns.
+	id VARCHAR(128),	# ID is the name of the camera, not the primary key. I don't know exactly how long ID is, so I used VARCHAR with a maximum length of 128.
+        video_timestamp DATETIME,	# Since I want the timestamp recorded by the camera and not the timestamp of the record being added into the database, I used DATETIME instead of TIMESTAMP.
+        video_content VARCHAR(256),	# Video content is a PATH (string), so I could use either CHAR or VARCHAR. Since I don't know exactly how long the PATH is, I used VARCHAR. I set the maximum length as 256 since there could be many folders and subfolders in the PATH.
+        thumbnail VARCHAR(256),		# Thumbnail is a PATH (string), so I could use either CHAR or VARCHAR. Since I don't know exactly how long the PATH is, I used VARCHAR. I set the maximum length as 256 since there could be many folders and subfolders in the PATH.
+        hash BINARY(32));	# Hash contains binary data, so I could use either BINARY or VARBINARY. Since hash has a fixed length of 32 bytes, I used BINARY(32).
+DESCRIBE video_output_1;	# Checks whether the 'video_output_1' table has been created.
+USE cameras;	# Makes sure the 'cameras' database is in use.
+CREATE TABLE video_output_2 (		# Creates a table called 'video_output_2' with the following 3 columns.
+	hash BINARY(32),	# Hash contains binary data, so I could use either BINARY or VARBINARY. Since hash has a fixed length of 32 bytes, I used BINARY(32).
+        image_content VARCHAR(256),	# Image content is a PATH (string), so I could use either CHAR or VARCHAR. Since I don't know exactly how long the PATH is, I used VARCHAR. I set the maximum length as 256 since there could be many folders and subfolders in the PATH.
+        image_timestamp DATETIME);	# Since I want the timestamp taken by the camera and not the timestamp of the record being added into the database, I used DATETIME instead of TIMESTAMP.
+DESCRIBE video_output_2;	# Checks whether the 'video_output_2' table has been created.
